@@ -6,6 +6,7 @@ CREATE TABLE account(
 );
 CREATE TABLE article(
     id INTEGER PRIMARY KEY NOT NULL,
+    title TEXT NOT NULL,
     words TEXT NOT NULL
 );
 CREATE TABLE comment(
@@ -13,6 +14,3 @@ CREATE TABLE comment(
     words TEXT NOT NULL
 );
 COMMIT;
-account  article  comment
-1|Hello world!
-2|Test two!
