@@ -1,23 +1,10 @@
+<script setup>
+import Navbar from "./components/Navbar.vue";
+</script>
+
 <template>
-  <div id="app">
-    <Navbar></Navbar>
-  </div>
+  <Navbar />
 </template>
 
-<script>
-import Navbar from "./components/Navbar.vue";
-import Article from "./components/Article.vue";
-export default {
-    components: {
-    Navbar,
-    Article,
-    },
-    data () {
-      return {
-                
-      }
-    },
-    methods () {      
-    },
-};
-</script>
+<style scoped>
+</style>
