@@ -1,16 +1,19 @@
-PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
-CREATE TABLE account(
-    name TEXT PRIMARY KEY NOT NULL,
-    password TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS "accounts" (
+	"account"	TEXT NOT NULL,
+	"password"	TEXT NOT NULL,
+	PRIMARY KEY("account")
 );
-CREATE TABLE article(
-    id INTEGER PRIMARY KEY NOT NULL,
-    title TEXT NOT NULL,
-    words TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS "articles" (
+	"id"	INTEGER NOT NULL,
+	"account"	TEXT NOT NULL,
+	"words"	TEXT NOT NULL,
+	PRIMARY KEY("id")
 );
-CREATE TABLE comment(
-    id INT PRIMARY KEY NOT NULL,
-    words TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS "comments" (
+	"id"	INTEGER NOT NULL,
+	"account"	TEXT NOT NULL,
+	"words"	TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
 );
 COMMIT;
