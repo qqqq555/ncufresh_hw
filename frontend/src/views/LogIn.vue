@@ -2,18 +2,18 @@
 <div class="center">
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
-		<form action="#">
+		<form @submit.prevent="btnSignUp">
 			<h1>Create Account</h1>
-			<input type="text" placeholder="Account" />
-			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
+			<input type="text" placeholder="Account" v-model="signA" required/>
+			<input type="password" placeholder="Password" v-model="signP" required/>
+			<button type="submit">Sign Up</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
 		<form action="#">
 			<h1>Log in</h1>
-			<input type="text" placeholder="Account" />
-			<input type="password" placeholder="Password" />
+			<input type="text" placeholder="Account" v-model="logA" required/>
+			<input type="password" placeholder="Password" v-model="logP" required/>
 			<button>Log In</button>
 		</form>
 	</div>
@@ -36,12 +36,34 @@
 </template>
 <script>
 export default{
+import axios from 'axios';
+    data(){
+        return{
+            signA: '',
+            signP: '',
+            logA: '',
+            logP: '',
+        }
+    },
     methods:{
         signUp(){
             document.getElementById('container').classList.add("right-panel-active");
         },
         signIn(){
             document.getElementById('container').classList.remove("right-panel-active");
+        },
+        btnSignUp(){
+            axios.post('http://localhost:3000/signup',{
+                signA: this.signA,
+                signP: this.signP,
+            })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+            window.alert("註冊成功!"); 
         }
     },
 }
