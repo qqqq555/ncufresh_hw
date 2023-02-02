@@ -36,7 +36,7 @@
 </template>
 <script>
 export default{
-import axios from 'axios';
+
     data(){
         return{
             signA: '',
