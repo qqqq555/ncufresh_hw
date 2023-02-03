@@ -4,17 +4,17 @@
 	<div class="form-container sign-up-container">
 		<form @submit.prevent="btnSignUp">
 			<h1>Create Account</h1>
-			<input type="text" placeholder="Account" v-model="signA" required/>
-			<input type="password" placeholder="Password" v-model="signP" required/>
+			<input type="text" placeholder="Account" id="signA" required/>
+			<input type="password" placeholder="Password" id="signP" required/>
 			<button type="submit">Sign Up</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
-		<form action="#">
+		<form @submit.prevent="btnLogIn">
 			<h1>Log in</h1>
-			<input type="text" placeholder="Account" v-model="logA" required/>
-			<input type="password" placeholder="Password" v-model="logP" required/>
-			<button>Log In</button>
+			<input type="text" placeholder="Account" id="logA" required/>
+			<input type="password" placeholder="Password" id="logP" required/>
+			<button tyoe="submit">Log In</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -35,6 +35,7 @@
 </div>
 </template>
 <script>
+import axios from "axios";
 export default{
 
     data(){
@@ -53,18 +54,56 @@ export default{
             document.getElementById('container').classList.remove("right-panel-active");
         },
         btnSignUp(){
-            axios.post('http://localhost:3000/signup',{
-                signA: this.signA,
-                signP: this.signP,
-            })
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-            window.alert("註冊成功!"); 
-        }
+			let account = document.getElementById("signA").value;
+			let password = document.getElementById("signP").value;
+			if (!account || !password) {
+				alert("帳號和密碼不得為空");
+				return;
+			}
+            const data = { account, password };
+			axios
+				.post("http://localhost:3000/accounts/signup", data)
+				.then((res) => {
+				if (res.status === 200) {
+					alert("註冊成功!請重新登入");
+					window.location.href = "/";
+				}
+				if (res.status === 201) {
+					alert("帳號已經存在");
+				}
+				})
+				.catch((err) => {
+				alert("註冊失敗");
+				console.log(err);
+				});
+        },
+		btnLogIn(){
+			const account = document.getElementById("logA").value;
+			const password = document.getElementById("logP").value;
+			const data = { account, password };
+			if (!account || !password) {
+				alert("帳號和密碼不得為空");
+				return;
+			}
+			axios
+				.post("http://localhost:3000/accounts/login", data, {
+				headers: {
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*",
+				},
+				withCredentials: true,
+				})
+				.then((res) => {
+				if (res.status === 200) {
+					alert("登入成功!");
+					window.location.href = "/";
+				}
+				})
+				.catch((err) => {
+				alert("登入失敗");
+				console.log(err);
+				});
+		}
     },
 }
 </script>
