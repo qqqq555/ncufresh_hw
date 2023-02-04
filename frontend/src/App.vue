@@ -15,13 +15,47 @@
   </div>
   <div class="nav-links">
     <router-link to="/">所有文章</router-link>
-    <router-link to="/mypost">我的文章</router-link>
-    <router-link to="/login">註冊/登入</router-link>
+    <router-link to="/mypost" v-if="logStatus">我的文章</router-link>
+    <router-link to="/login" v-if="!logStatus">註冊/登入</router-link>
+    <button v-if="logStatus" @click="logOut">登出</button>
   </div>
 </div>
 <RouterView></RouterView>
 </template>
 <script>
+import { ref, onMounted } from "vue";
+import Cookies  from "js-cookie";
+import axios from "axios";
+export default{
+  setup(){
+    const logStatus = ref(false);
+    onMounted(() => {
+      if (Cookies.get("jwt")) {
+        logStatus.value = true;
+      }
+      else {
+        logStatus.value = false;
+      }
+    });
+    const logOut = () =>{
+      if (Cookies.get("jwt")) {
+        Cookies.remove("jwt");
+        Cookies.remove("account");
+        logStatus.value = false;
+      } 
+    };
+    return {logStatus, logOut};
+  },
+  method:{
+    logOut(){
+      axios
+        .get("http://localhost:3000/logout")
+        .catch((err) =>{
+          console.log(err);
+        })
+    }
+  }
+};
 </script>
 <style scoped>
 * {

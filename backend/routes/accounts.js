@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 var router = express.Router();
+const md5 = require('md5');
 const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('./ncufreshHW.db');
+const session = require('express-session');
+
 
 router.post('/signup', function(req,res,next){
     let account = req.body.account;
@@ -31,24 +34,5 @@ router.post('/signup', function(req,res,next){
     })
 })
 
-router.post('/login', function(req, res) {
-    let account = req.body.account;
-    let password = req.body.password;
-    const logIn = 'SELECT * FROM accounts WHERE account = ? AND password = ?';
-    if (account && password) {
-        db.all(logIn, [account, password], (err, rows) => {
-            if (err) {
-                res.status(500).send('資料庫錯誤')
-            }
-            else{
-                if(rows.length===0){
-                    res.status(401).json({message:"無此帳號"})
-                }
-                else{
-                    res.status(200).json({message:"登入成功"});
-                } 
-            }
-        })
-    }
-});
+
 module.exports = router;

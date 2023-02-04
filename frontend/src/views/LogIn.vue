@@ -36,6 +36,8 @@
 </template>
 <script>
 import axios from "axios";
+import md5 from "md5";
+import Cookies from "js-cookie";
 export default{
 
     data(){
@@ -55,11 +57,12 @@ export default{
         },
         btnSignUp(){
 			let account = document.getElementById("signA").value;
-			let password = document.getElementById("signP").value;
-			if (!account || !password) {
+			let password1 = document.getElementById("signP").value;
+			if (!account || !password1) {
 				alert("帳號和密碼不得為空");
 				return;
 			}
+			const password = md5(password1);
             const data = { account, password };
 			axios
 				.post("http://localhost:3000/accounts/signup", data)
@@ -86,7 +89,7 @@ export default{
 				return;
 			}
 			axios
-				.post("http://localhost:3000/accounts/login", data, {
+				.post("http://localhost:3000/login", data, {
 				headers: {
 					"Content-Type": "application/json",
 					"Access-Control-Allow-Origin": "*",
@@ -96,6 +99,8 @@ export default{
 				.then((res) => {
 				if (res.status === 200) {
 					alert("登入成功!");
+					Cookies.set("jwt", res.data.token, { expires: 1 });
+            		Cookies.set("account", account, { expires: 1 });
 					window.location.href = "/";
 				}
 				})
