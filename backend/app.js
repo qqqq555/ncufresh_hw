@@ -7,6 +7,7 @@ const session = require('express-session');
 var indexRouter = require('./routes/index');
 var testRouter = require('./routes/test');
 var accountsRouter = require('./routes/accounts');
+var articlesRouter = require('./routes/articles');
 var app = express();
 const {json} = require('body-parser');
 const md5 = require('md5');
@@ -34,6 +35,8 @@ app.use(cors(
 app.use('/', indexRouter);
 app.use('/test', testRouter);
 app.use('/accounts', accountsRouter);
+app.use('/articles', articlesRouter);
+
 
 app.post('/login', function(req, res) {
     let account = req.body.account;
