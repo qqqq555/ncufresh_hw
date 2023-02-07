@@ -19,8 +19,8 @@ export default {
             .then(response => {
                 this.articles = response.data;
             })
-            .catch(error => {
-                console.error(err);
+            .catch((err) => {
+                console.log(err);
             });
     }
 };
