@@ -2,7 +2,8 @@
     <div>
         <div v-for="article in articles" :key="article.id">
             <h2>{{ article.title }}</h2>
-            <p>{{ article.content }}</p>
+            <p>{{ article.words }}</p>
+            <p>by {{  article.account }}</p>
         </div>
     </div>
 </template>
