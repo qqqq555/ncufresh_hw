@@ -68,11 +68,11 @@ app.post('/login', function(req, res) {
     }
 });
 
-app.get('/logout', function(req, res) {
-
+app.get('/logout', function(req, res, next) {
     req.session.destroy();
     res.clearCookie('jwt');
     res.status(200).send('success');
+    
 });
 
 module.exports = app;
