@@ -58,7 +58,11 @@ export default{
 };
 </script>
 <style scoped>
-* {
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css";
+*{
+  margin: 0;
+  padding: 0px;
+  border: 0px;
   box-sizing: border-box;
 }
 .nav {

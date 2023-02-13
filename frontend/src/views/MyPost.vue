@@ -4,20 +4,30 @@
     <b class="title">新增文章</b>
     <div class="line"></div>
     <form>
+        <br>
         <p>標題：</p>
+        <br>
         <input v-model="title" type="text" id="title" name="title" required>
+        <br><br>
         <p>內容：</p>
+        <br>
         <textarea v-model="words" id="words" name="words" required></textarea>
         <br>
-        <button type="submit" @click="post">送出</button>
+        <button type="submit" @click="post" class="submit">送出</button>
     </form>
     <br>
     <b class="title">編輯文章</b>
     <div class="line"></div>
     <div v-for="article in articles" :key="article.id">
         <br>
-        <b class="littleTitle">{{ article.title }}</b>
-        <p>{{ article.words }}</p>
+        <div class="article">
+            <br>
+            <b class="littleTitle">{{ article.title }}</b>
+            <input type="image" class="trash" img src="trash.png">
+            <input type="image" class="edit" img src="edit.png">
+            <p>{{ article.words }}</p>
+            <br>
+        </div>
     </div>
     </div>
 </template>
@@ -72,7 +82,10 @@ export default{
 </script>
 <style scoped>
 *{
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0px;
+  border: 0px;
+  box-sizing: border-box;
 }
 .title{
     font-size: 30px;
@@ -97,7 +110,6 @@ export default{
 	margin: -20px 0 50px;
     position: relative;
     margin: auto;
-
 }
 p{
     color: #7993a4;
@@ -109,13 +121,15 @@ textarea{
     resize: none;
     color: #7993a4;
     font-size: 20px;
+    border: solid .3px #8592a2;
 }
 input[type=text]{
     color: #7993a4;
     font-size: 20px;
     width: 100%;
+    border: solid .3px #8592a2;
 }
-button{
+.submit{
     margin-left: 35%;
     display: inline-block;
     width: 30%;
@@ -129,12 +143,26 @@ button{
     border-radius: 15px;
     box-shadow: 0 9px #999;
 }
-button:hover{
+.submit:hover{
     background-color: #7993a4;
 }
-button:active{
+.submit:active{
     background-color: #7993a4;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
+.article{
+    border: solid .3px #8592a2;
+    
+}
+.trash, .edit{
+    width: 23px;
+    float: right;
+    margin-right: 3%;
+
+}
+.edit:hover, .trash:hover{
+    box-shadow: 3px 3px #8592a2;
+}
+
 </style>
