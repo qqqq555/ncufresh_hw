@@ -23,8 +23,8 @@
         <div class="article">
             <br>
             <b class="littleTitle">{{ article.title }}</b>
-            <input type="image" class="trash" img src="trash.png">
-            <input type="image" class="edit" img src="edit.png">
+            <input type="image" class="trash" img src="trash.png" @click="deletePost(article.id)">
+            <input type="image" class="edit" img src="edit.png" @click="deletePost(article.id)">
             <p>{{ article.words }}</p>
             <br>
         </div>
@@ -78,6 +78,12 @@ export default{
                 console.log(err);
             });
     },
+    methods: {
+        async deletePost(id) {
+            console.log('http://localhost:3000/articles/'+id);
+            let result = await axios.delete('http://localhost:3000/articles/'+id);
+        }
+    }
 };
 </script>
 <style scoped>
@@ -159,7 +165,6 @@ input[type=text]{
     width: 23px;
     float: right;
     margin-right: 3%;
-
 }
 .edit:hover, .trash:hover{
     box-shadow: 3px 3px #8592a2;

@@ -18,7 +18,6 @@ router.get('', (req, res) => {
 });
 
 router.get('/:account', (req, res) => {
-    console.log(req.params.account);
     db.all('SELECT * FROM articles WHERE account = ?', [req.params.account], (err, rows) => {
         if(err){
             return res.status(500).send;
@@ -34,7 +33,7 @@ router.post('/post', (req, res, next) => {
             res.status(201).json({message:"沒登入"})
         }
         else{
-            db.get('INSERT INTO articles (account, title, words) VALUES (?,?,?)',[decoded.account, req.body.title, req.body.words], 
+            db.run('INSERT INTO articles (account, title, words) VALUES (?,?,?)',[decoded.account, req.body.title, req.body.words], 
             function(err){
                 if(err){
                     res.status(500).send
@@ -45,5 +44,18 @@ router.post('/post', (req, res, next) => {
             })
         }
     });
+});
+
+router.delete('/:id', (req, res) => {
+    const id=req.params.id;
+    console.log(id);
+    db.run('DELETE FROM articles WHERE id = ?', [id], function(err) {
+        if(err){
+            return res.status(500).send
+        }
+        else{
+            res.status(200).send
+        }
+    })
 });
 module.exports = router;
