@@ -1,34 +1,20 @@
 <template>
     <div class="center">
     <br>
-    <b class="title">新增文章</b>
+    <b class="title">編輯文章</b>
     <div class="line"></div>
     <form>
         <br>
         <p>標題：</p>
         <br>
-        <input v-model="title" type="text" id="title" name="title" required>
+        <input v-model="articles.title" type="text" id="title" name="title" required>
         <br><br>
         <p>內容：</p>
         <br>
-        <textarea v-model="words" id="words" name="words" required></textarea>
+        <textarea v-model="articles.words" id="words" name="words" required></textarea>
         <br>
         <button type="submit" @click="post" class="submit">送出</button>
     </form>
-    <br>
-    <b class="title">編輯文章</b>
-    <div class="line"></div>
-    <div v-for="article in articles" :key="article.id">
-        <br>
-        <div class="article">
-            <br>
-            <b class="littleTitle">{{ article.title }}</b>
-            <input type="image" class="trash" img src="trash.png" @click="deletePost(article.id)">
-            <input type="image" class="edit" img src="edit.png" @click="editPost(article.id)">
-            <p>{{ article.words }}</p>
-            <br>
-        </div>
-    </div>
     </div>
 </template>
 <script>
@@ -38,13 +24,14 @@ import { useRoute } from "vue-router";
 export default{
     data(){
         return{
-            title:'請輸入標題',
-            words:'請輸入內容',
-            articles:[],
+            articles: {
+                title: '',
+                words: '',
+            }
         }
     },
     setup(){
-        
+
         const post = async () => {
             try {
                 const res = await axios.post(
@@ -69,23 +56,16 @@ export default{
         return { post };
     },
     created(){
+        let id = this.$route.params.id;
         const route = useRoute();
-        axios.get('http://localhost:3000/articles/'+ Cookies.get("account"))
+        axios.get('http://localhost:3000/articles/edit/'+ id)
             .then(response => {
-                this.articles = response.data;
+                this.articles.title = response.data[0].title;
+                this.articles.words = response.data[0].words;
             })
             .catch((err) => {
                 console.log(err);
             });
-    },
-    methods: {
-        async deletePost(id) {
-            console.log('http://localhost:3000/articles/'+id);
-            let result = await axios.delete('http://localhost:3000/articles/'+id);
-        },
-        editPost(id){
-            this.$router.push({path: "/editpost/"+ id});
-        }
     },
 };
 </script>

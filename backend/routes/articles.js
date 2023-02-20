@@ -45,6 +45,17 @@ router.post('/post', (req, res, next) => {
         }
     });
 });
+router.get('/edit/:id', (req, res) => {
+    const id=req.params.id;
+    db.all('SELECT title, words FROM articles WHERE id = ?', [id], (err, rows) => {
+        if(err){
+            return res.status(500).send;
+        }
+        console.log(rows);
+        res.send(rows);
+    });
+})
+
 
 router.delete('/:id', (req, res) => {
     const id=req.params.id;
