@@ -51,11 +51,21 @@ router.get('/edit/:id', (req, res) => {
         if(err){
             return res.status(500).send;
         }
-        console.log(rows);
         res.send(rows);
     });
 })
-
+router.put('/edit/:id', (req, res) => {
+    const id=req.params.id;
+    const {title, words} = req.body;
+    db.run('UPDATE articles SET title = ?, words = ? WHERE id = ?', [title, words, id], (err)=>{
+        if (err) {
+            console.error(err.message);
+            res.sendStatus(500);
+            return;
+          }
+          res.sendStatus(200);
+    });
+});
 
 router.delete('/:id', (req, res) => {
     const id=req.params.id;

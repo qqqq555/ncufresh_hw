@@ -13,7 +13,7 @@
         <br>
         <textarea v-model="articles.words" id="words" name="words" required></textarea>
         <br>
-        <button type="submit" @click="post" class="submit">送出</button>
+        <button type="submit" @click="save()" class="submit">儲存</button>
     </form>
     </div>
 </template>
@@ -27,33 +27,9 @@ export default{
             articles: {
                 title: '',
                 words: '',
-            }
+            },
+            id: this.$route.params.id
         }
-    },
-    setup(){
-
-        const post = async () => {
-            try {
-                const res = await axios.post(
-                    'http://localhost:3000/articles/post',
-                    {
-                        title: title.value,
-                        words: words.value,
-                    },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            authorization: "Bearer " + Cookies.get("jwt"),
-                        },
-                    }
-                );
-                console.log(res.data);
-            } catch(err){
-                console.log(err);
-                alert("發文失敗");
-            }
-        };
-        return { post };
     },
     created(){
         let id = this.$route.params.id;
@@ -67,6 +43,14 @@ export default{
                 console.log(err);
             });
     },
+    methods: {
+        save() {
+            axios.put('http://localhost:3000/articles/edit/' + this.$route.params.id, this.articles).then(() => {
+                window.location.href = "/";
+                alert("編輯成功!");
+            });
+        }
+    }
 };
 </script>
 <style scoped>

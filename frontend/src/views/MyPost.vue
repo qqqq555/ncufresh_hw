@@ -106,7 +106,7 @@ export default{
     color: #8592a2;
 }
 .line{
-    width: 70%;
+    width: 100%;
     height: 1px;
     border-top: solid #8E9BAE;
 }
@@ -119,6 +119,7 @@ export default{
 	margin: -20px 0 50px;
     position: relative;
     margin: auto;
+    width: 70%;
 }
 p{
     color: #7993a4;
