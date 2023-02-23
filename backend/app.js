@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var testRouter = require('./routes/test');
 var accountsRouter = require('./routes/accounts');
 var articlesRouter = require('./routes/articles');
+var commentsRouter = require('./routes/comments');
 var app = express();
 const {json} = require('body-parser');
 const md5 = require('md5');
@@ -36,7 +37,7 @@ app.use('/', indexRouter);
 app.use('/test', testRouter);
 app.use('/accounts', accountsRouter);
 app.use('/articles', articlesRouter);
-
+app.use('/comments', commentsRouter);
 
 app.post('/login', function(req, res) {
     let account = req.body.account;

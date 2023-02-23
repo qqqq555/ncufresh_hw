@@ -6,6 +6,15 @@
             <b class="littleTitle">{{ article.title }}</b>
             <p>{{ article.words }}</p>
             <p>by {{  article.account }}</p>
+            <input type="image" class="arrow" img src="down.png" @click="comment(article.id)">
+            </div>
+            <div class="comment">
+            <ul>
+                <li v-for="comment in comments" :key="comment.id">
+                    <p>{{ comment.words }}</p>
+                    <p>by {{ comment.account }}</p>
+                </li>
+            </ul>
             </div>
         </div>
     </div>
@@ -16,6 +25,7 @@ export default {
     data () {
         return {
             articles: [],        
+            comments: [],
         }
     },
     created(){
@@ -26,6 +36,18 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
+    },
+    methods: {
+        comment(id){
+            axios.get('http://localhost:3000/comments/'+id)
+                .then(response => {
+                    this.comments = response.data;
+                    console.log(this.comments);
+                })
+                .catch((err) => {
+                console.log(err);
+                });
+        },
     }
 };
 </script>
@@ -58,5 +80,11 @@ p{
 .article{
     border: solid .3px #8592a2;
     width: 1000px;
+}
+.arrow{
+    width: 23px;
+    float: right;
+    margin-right: 3%;
+    margin-bottom: 3px;
 }
 </style>
