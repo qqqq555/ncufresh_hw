@@ -34,7 +34,7 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useRoute } from "vue-router";
+import { loadRouteLocation, useRoute } from "vue-router";
 export default{
     data(){
         return{
@@ -81,7 +81,9 @@ export default{
     methods: {
         async deletePost(id) {
             console.log('http://localhost:3000/articles/'+id);
+            location.reload();
             let result = await axios.delete('http://localhost:3000/articles/'+id);
+            
         },
         editPost(id){
             this.$router.push({path: "/editpost/"+ id});
