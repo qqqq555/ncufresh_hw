@@ -15,11 +15,10 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/:id', (req, res) => {
-    const { articleId, content } = req.body;
-    const accountId = req.session.account.id;
-    const sql = `INSERT INTO comments (article_id, account_id, content) VALUES (?, ?, ?)`;
-    db.run(sql, [articleId, accountId, content], function(err) {
+router.post('/:id/:account', (req, res) => {
+    const words = req.body.words;
+    const sql = `INSERT INTO comments (id, account, words) VALUES (?, ?, ?)`;
+    db.run(sql, [req.params.id, req.params.account, words], function(err) {
       if (err) {
         console.error(err.message);
         res.status(500).json({ error: 'Failed to add comment' });
