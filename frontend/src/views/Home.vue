@@ -152,4 +152,12 @@ input[type=text]{
     margin-bottom: 5px;
     margin-top: 5px;
 }
+@media(max-width: 600px) {
+    input[type=text]{
+        width: 80%;
+    }
+    .add{
+        width: 20%;
+    }
+}
 </style>

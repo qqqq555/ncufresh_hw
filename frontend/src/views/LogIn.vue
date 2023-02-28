@@ -32,6 +32,24 @@
 		</div>
 	</div>
 </div>
+<div class="mini">
+	<div class="mini-form-container">
+		<form @submit.prevent="minibtnLogIn">
+			<h1>Log in</h1>
+			<input type="text" placeholder="Account" id="minilogA" required/>
+			<input type="password" placeholder="Password" id="minilogP" required/>
+			<button type="submit">Log In</button>
+		</form>
+	</div>
+	<div class="mini-form-container">
+		<form @submit.prevent="minibtnSignUp">
+			<h1>Create Account</h1>
+			<input type="text" placeholder="Account" id="minisignA" required/>
+			<input type="password" placeholder="Password" id="minisignP" required/>
+			<button type="submit">Sign Up</button>
+		</form>
+	</div>
+</div>
 </div>
 </template>
 <script>
@@ -46,6 +64,10 @@ export default{
             signP: '',
             logA: '',
             logP: '',
+			minisignA: '',
+            minisignP: '',
+            minilogA: '',
+        	minilogP: '',
         }
     },
     methods:{
@@ -108,11 +130,88 @@ export default{
 				alert("登入失敗");
 				console.log(err);
 				});
+		},
+		minibtnSignUp(){
+			let account = document.getElementById("minisignA").value;
+			let password1 = document.getElementById("minisignP").value;
+			if (!account || !password1) {
+				alert("帳號和密碼不得為空");
+				return;
+			}
+			const password = md5(password1);
+            const data = { account, password };
+			axios
+				.post("http://localhost:3000/accounts/signup", data)
+				.then((res) => {
+				if (res.status === 200) {
+					alert("註冊成功!請重新登入");
+					window.location.href = "/";
+				}
+				if (res.status === 201) {
+					alert("帳號已經存在");
+				}
+				})
+				.catch((err) => {
+				alert("註冊失敗");
+				console.log(err);
+				});
+        },
+		minibtnLogIn(){
+			const account = document.getElementById("minilogA").value;
+			const password = document.getElementById("minilogP").value;
+			const data = { account, password };
+			if (!account || !password) {
+				alert("帳號和密碼不得為空");
+				return;
+			}
+			axios
+				.post("http://localhost:3000/login", data, {
+				headers: {
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*",
+				},
+				withCredentials: true,
+				})
+				.then((res) => {
+				if (res.status === 200) {
+					alert("登入成功!");
+					Cookies.set("jwt", res.data.token, { expires: 1 });
+            		Cookies.set("account", account, { expires: 1 });
+					window.location.href = "/";
+				}
+				})
+				.catch((err) => {
+				alert("登入失敗");
+				console.log(err);
+				});
 		}
     },
 }
 </script>
 <style scoped>
+@media(max-width: 600px){
+	.mini{
+		display: "";	
+	}
+	.container{
+		display: none;
+	}
+}
+@media(min-width: 600px){
+	.mini{
+		display: none;
+	}
+	.container{
+		display: "";
+	}
+}
+
+.mini-form-container{
+	position: relative;
+	height: 50%;
+	margin-top: 5%;
+}
+
 *{
   margin: 0;
   padding: 0px;
@@ -121,7 +220,7 @@ export default{
 }
 
 .center {
-	display: flex;
+	
 	justify-content: center;
 	align-items: center;
     align-content: center;
@@ -193,6 +292,7 @@ input {
 }
 
 .container {
+	margin-top: 5%;
 	background-color: #fff;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
@@ -200,7 +300,6 @@ input {
 	position: relative;
 	overflow: hidden;
 	width: 768px;
-	max-width: 100%;
 	min-height: 480px;
 }
 

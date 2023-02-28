@@ -92,6 +92,39 @@ export default{
 };
 </script>
 <style scoped>
+@media(max-width: 600px) {
+    .submit{
+        margin-left: 25%;
+        display: inline-block;
+        width: 50%;
+        height: 60px;
+        padding: 15px 25px;
+        font-size: 23px;
+        cursor: pointer;
+        color: #fff;
+        background-color: #9bb4c5;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+    }
+}
+@media(min-width: 600px) {
+    .submit{
+        margin-left: 35%;
+        display: inline-block;
+        width: 30%;
+        height: 60px;
+        padding: 15px 25px;
+        font-size: 23px;
+        cursor: pointer;
+        color: #fff;
+        background-color: #9bb4c5;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+    }
+}
+
 *{
   margin: 0;
   padding: 0px;
@@ -141,20 +174,7 @@ input[type=text]{
     width: 100%;
     border: solid .3px #8592a2;
 }
-.submit{
-    margin-left: 35%;
-    display: inline-block;
-    width: 30%;
-    height: 60px;
-    padding: 15px 25px;
-    font-size: 23px;
-    cursor: pointer;
-    color: #fff;
-    background-color: #9bb4c5;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 9px #999;
-}
+
 .submit:hover{
     background-color: #7993a4;
 }
