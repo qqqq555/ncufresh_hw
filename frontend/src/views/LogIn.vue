@@ -87,7 +87,7 @@ export default{
 			const password = md5(password1);
             const data = { account, password };
 			axios
-				.post("http://localhost:3000/accounts/signup", data)
+				.post("/api/accounts/signup", data)
 				.then((res) => {
 				if (res.status === 200) {
 					alert("註冊成功!請重新登入");
@@ -111,7 +111,7 @@ export default{
 				return;
 			}
 			axios
-				.post("http://localhost:3000/login", data, {
+				.post("/api/login", data, {
 				headers: {
 					"Content-Type": "application/json",
 					"Access-Control-Allow-Origin": "*",
@@ -141,7 +141,7 @@ export default{
 			const password = md5(password1);
             const data = { account, password };
 			axios
-				.post("http://localhost:3000/accounts/signup", data)
+				.post("/api/accounts/signup", data)
 				.then((res) => {
 				if (res.status === 200) {
 					alert("註冊成功!請重新登入");
@@ -165,7 +165,7 @@ export default{
 				return;
 			}
 			axios
-				.post("http://localhost:3000/login", data, {
+				.post("/api/login", data, {
 				headers: {
 					"Content-Type": "application/json",
 					"Access-Control-Allow-Origin": "*",

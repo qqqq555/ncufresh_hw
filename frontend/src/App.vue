@@ -52,7 +52,7 @@ export default{
   method:{
     logOut(){
       axios
-        .get("http://localhost:3000/logout")
+        .get("/api/logout")
         .catch((err) =>{
           console.log(err);
         })

@@ -34,7 +34,7 @@ export default{
     created(){
         let id = this.$route.params.id;
         const route = useRoute();
-        axios.get('http://localhost:3000/articles/edit/'+ id)
+        axios.get('/api/articles/edit/'+ id)
             .then(response => {
                 this.articles.title = response.data[0].title;
                 this.articles.words = response.data[0].words;
@@ -45,9 +45,9 @@ export default{
     },
     methods: {
         save() {
-            axios.put('http://localhost:3000/articles/edit/' + this.$route.params.id, this.articles).then(() => {
-                window.location.href = "/";
+            axios.put('/api/articles/edit/' + this.$route.params.id, this.articles).then(() => {
                 alert("編輯成功!");
+                window.location.href = "/";
             });
         }
     }

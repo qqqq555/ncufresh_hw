@@ -48,7 +48,7 @@ export default{
         const post = async () => {
             try {
                 const res = await axios.post(
-                    'http://localhost:3000/articles/post',
+                    '/api/articles/post',
                     {
                         title: title.value,
                         words: words.value,
@@ -70,7 +70,7 @@ export default{
     },
     created(){
         const route = useRoute();
-        axios.get('http://localhost:3000/articles/'+ Cookies.get("account"))
+        axios.get('/api/articles/'+ Cookies.get("account"))
             .then(response => {
                 this.articles = response.data;
             })
@@ -80,9 +80,8 @@ export default{
     },
     methods: {
         async deletePost(id) {
-            console.log('http://localhost:3000/articles/'+id);
             location.reload();
-            let result = await axios.delete('http://localhost:3000/articles/'+id);
+            let result = await axios.delete('/api/articles/'+id);
             
         },
         editPost(id){

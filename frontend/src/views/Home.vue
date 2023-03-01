@@ -36,7 +36,7 @@ export default {
         }
     },
     created(){
-        axios.get('http://localhost:3000/articles')
+        axios.get('/api/articles')
             .then(response => {
                 this.articles = response.data;
             })
@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         comment(id){
-            axios.get('http://localhost:3000/comments/'+id)
+            axios.get('/api/comments/'+id)
                 .then(response => {
                     this.comments = response.data;
                     this.postId = id;
@@ -63,7 +63,7 @@ export default {
                 alert("登入後才可留言!");
             }
             else{
-                axios.post('http://localhost:3000/comments/'+id+'/'+Cookies.get("account"), {words: words.value})
+                axios.post('/api/comments/'+id+'/'+Cookies.get("account"), {words: words.value})
                 .catch((err) => {
                 console.log(err);
                 });
